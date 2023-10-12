@@ -36,26 +36,12 @@ const HRLine = () => (
   />
 )
 
-const Report = () => {
+type Props = {
+  crimeData: ApiResponse | null;
+};
 
-  const [crimeData, setCrimeData] = useState<ApiResponse | null>(null);
+const Report = ({ crimeData }: Props) => {
   const [chartData, setChartData] = useState<ChartData<"line"> | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/crime', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const data = await res.json()
-      if (data)
-        setCrimeData(data);
-    }
-
-    fetchData();
-
-  }, []);
 
   useEffect(() => {
     if (crimeData) {
@@ -147,6 +133,7 @@ const Report = () => {
                 data={chartData}
                 width={'100%'}
                 options={{
+                  animation: false,
                   scales: {
                     x: {
                       grid: {
