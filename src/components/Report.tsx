@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -9,8 +11,10 @@ import {
   Legend,
   PointElement,
   LineElement,
+  ChartData,
 } from 'chart.js';
 import Image from 'next/image';
+import type { ApiResponse, OffenseData } from '@/types/CrimeTypes';
 
 ChartJS.register(
   PointElement,
@@ -33,23 +37,55 @@ const HRLine = () => (
 )
 
 const Report = () => {
-  // Example Chart Data
-  const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          '#1463FF',
+
+  const [crimeData, setCrimeData] = useState<ApiResponse | null>(null);
+  const [chartData, setChartData] = useState<ChartData<"line"> | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/api/crime', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      if (data)
+        setCrimeData(data);
+    }
+
+    fetchData();
+
+  }, []);
+
+  useEffect(() => {
+    if (crimeData) {
+
+      const burglaryData = crimeData.data.map((i) => i.Burglary);
+      const yearsData = crimeData.data.map((i) => i.data_year);
+
+      const data: ChartData<"line"> = {
+        labels: yearsData,
+        datasets: [
+          {
+            label: 'No. of Burglary',
+            data: burglaryData,
+            backgroundColor: [
+              '#1463FF',
+            ],
+            borderColor: [
+              '#1463FF',
+            ],
+            borderWidth: 2,
+          },
         ],
-        borderColor: [
-          '#1463FF',
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
+      };
+
+      setChartData(data);
+
+    }
+  }, [crimeData]);
+
+  if (!chartData) return;
 
   return (
     <div>
@@ -108,9 +144,16 @@ const Report = () => {
             <p className='-rotate-90'>Arrests</p>
             <div className='w-full h-[150px] bg-[#fff] px-2 py-4 my-3 rounded-[13px] drop-shadow-sm'>
               <Line
-                data={data}
+                data={chartData}
                 width={'100%'}
                 options={{
+                  scales: {
+                    x: {
+                      grid: {
+                        display: false,
+                      }
+                    },
+                  },
                   elements: {
                     point: {
                       radius: 0,

@@ -1,5 +1,3 @@
-import 'svg-pathdata';
-
 import React from "react";
 import { jsPDF } from "jspdf";
 
