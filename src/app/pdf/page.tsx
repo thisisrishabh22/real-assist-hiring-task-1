@@ -12,6 +12,7 @@ const Report = dynamic(() => import('@/components/Report'), { ssr: true });
 const PDFPage: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [crimeData, setCrimeData] = useState<ApiResponse | null>(null);
+  const [downloaded, setDownloaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,10 @@ const PDFPage: React.FC = () => {
 
     fetchData();
 
+    return () => {
+      setDownloaded(false);
+      setCrimeData(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -34,7 +39,8 @@ const PDFPage: React.FC = () => {
     if (!crimeData) return;
 
     const generatePdf = async () => {
-      if (!ref.current || !crimeData) return;
+      if (downloaded || !ref.current || !crimeData) return;
+      setDownloaded(true);
 
       const canvas = await html2canvas(ref.current, { width: ref.current.clientWidth, height: ref.current.clientHeight });
       const imgData = canvas.toDataURL("image/png");
@@ -53,10 +59,10 @@ const PDFPage: React.FC = () => {
     };
 
     setTimeout(() => {
-    generatePdf();
+      generatePdf();
     }, 200);
 
-  }, [crimeData]);
+  }, [crimeData, downloaded]);
 
   return (
     <>
