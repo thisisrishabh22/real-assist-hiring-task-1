@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 interface HomeProps {
   params: any;
   searchParams: {
-    downloaded: boolean;
+    downloaded?: boolean;
     [key: string]: any;
   };
 }
