@@ -69,6 +69,27 @@ const Report = () => {
         <HRLine />
       </div>
 
+      <div className='bg-[#E8EEFB] mx-6 pt-4 rounded-[13px] my-4'>
+        <h5 className='font-poppins text-md text-[#1463FF] mx-8 mb-2'>&nbsp;&nbsp;</h5>
+        <div className='bg-[#F2F4F5] w-full pr-8 pb-4 pt-3 rounded-b-[13px]'>
+          <div className='flex items-center w-full justify-start'>
+            <p className='-rotate-90 opacity-0'>Arrests</p>
+            <div className='w-full h-[150px] bg-[#fff] px-2 py-4 my-3 rounded-[13px] drop-shadow-sm'>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='bg-[#E8EEFB] mx-6 pt-4 rounded-[13px] my-4'>
+        <h5 className='font-poppins text-md text-[#1463FF] mx-8 mb-2'>&nbsp;&nbsp;</h5>
+        <div className='bg-[#F2F4F5] w-full pr-8 pb-4 pt-3 rounded-b-[13px]'>
+          <div className='flex items-center w-full justify-start'>
+            <p className='-rotate-90 opacity-0'>Arrests</p>
+            <div className='w-full h-[150px] bg-[#fff] px-2 py-4 my-3 rounded-[13px] drop-shadow-sm'>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Crime Title Break */}
       <div className='flex mx-6 items-center'>
