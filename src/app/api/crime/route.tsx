@@ -4,15 +4,6 @@ export async function GET(request: Request) {
 
   const data = await getData(apiURL);
 
-  // Check if request is from current app only
-  // const requestOrigin = request.headers.get('Origin');
-  // const appOrigin = new URL(request.url).origin;
-
-  // console.log(appOrigin, ` ${requestOrigin}`, requestOrigin !== appOrigin);
-  // if (requestOrigin !== appOrigin) {
-  //   return new Response('Unauthorized', { status: 401 });
-  // }
-
   return Response.json( data, {
     status: 200,
     headers: {
