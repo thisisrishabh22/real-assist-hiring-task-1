@@ -2,26 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Beausite Classic";
+  src: url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.eot");
+  src: url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/81db551dd19e720ed0bc40dbde312130.svg#Beausite Classic Regular")format("svg");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer components {
+  .btn-primary {
+    @apply bg-[#090E24] shadow-sm shadow-[#0000000F] text-white font-medium flex justify-evenly items-center w-[109px] h-[56px] font-beausite text-[14px] rounded-[16px];
   }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
