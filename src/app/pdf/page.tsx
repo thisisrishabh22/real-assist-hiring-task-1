@@ -1,13 +1,16 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from "react";
-import Report from "@/components/Report";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { ApiResponse } from "@/types/CrimeTypes";
+import Loader from "@/components/Loader";
+import dynamic from "next/dynamic";
+const Report = dynamic(() => import('@/components/Report'), { ssr: true });
+
 
 const PDFPage: React.FC = () => {
-  const ref = useRef<HTMLDivElement>(null) as React.MutableRefObject<HTMLDivElement | null>;
+  const ref = useRef<HTMLDivElement>(null);
   const [crimeData, setCrimeData] = useState<ApiResponse | null>(null);
 
   useEffect(() => {
@@ -28,36 +31,44 @@ const PDFPage: React.FC = () => {
 
   useEffect(() => {
 
+    if (!crimeData) return;
+
     const generatePdf = async () => {
-      if (!ref || !ref.current) return; // check if html is defined before using it
+      if (!ref.current || !crimeData) return;
+
       const canvas = await html2canvas(ref.current, { width: ref.current.clientWidth, height: ref.current.clientHeight });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF('l', 'pt', 'a4', true);
-      pdf.addImage(imgData, "PNG", 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), undefined, 'NONE');
+      pdf.addImage(imgData, "PNG", 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), undefined, 'FAST');
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-      if (isSafari)
-        window.open(pdf.output('bloburl'), '_blank');
-      else
-        pdf.save("crime.pdf");
 
-      window.open('/', '_self')
-  
+      if (isSafari) {
+        window.open(pdf.output('bloburl'), '_blank');
+      } else {
+        pdf.save("crime.pdf");
+      }
+
+      // Redirect only if the download was successful
+      window.location.href = '/';
     };
 
-    if (crimeData)
-      setTimeout(() => {
-        generatePdf();
-      }, 100);
+    setTimeout(() => {
+    generatePdf();
+    }, 200);
 
   }, [crimeData]);
 
   return (
-    <div className="main">
-      <div className="content" ref={ref}>
-        <Report crimeData={crimeData} />
+    <>
+      <Loader />
+      <div className="main opacity-0">
+        <div className="content" ref={ref}>
+          <Report crimeData={crimeData} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
 export default PDFPage;
+

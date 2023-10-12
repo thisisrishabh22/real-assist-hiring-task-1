@@ -1,6 +1,4 @@
-"use client"
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -11,10 +9,9 @@ import {
   Legend,
   PointElement,
   LineElement,
-  ChartData,
 } from 'chart.js';
 import Image from 'next/image';
-import type { ApiResponse, OffenseData } from '@/types/CrimeTypes';
+import type { ApiResponse } from '@/types/CrimeTypes';
 
 ChartJS.register(
   PointElement,
@@ -41,37 +38,8 @@ type Props = {
 };
 
 const Report = ({ crimeData }: Props) => {
-  const [chartData, setChartData] = useState<ChartData<"line"> | null>(null);
 
-  useEffect(() => {
-    if (crimeData) {
-
-      const burglaryData = crimeData.data.map((i) => i.Burglary);
-      const yearsData = crimeData.data.map((i) => i.data_year);
-
-      const data: ChartData<"line"> = {
-        labels: yearsData,
-        datasets: [
-          {
-            label: 'No. of Burglary',
-            data: burglaryData,
-            backgroundColor: [
-              '#1463FF',
-            ],
-            borderColor: [
-              '#1463FF',
-            ],
-            borderWidth: 2,
-          },
-        ],
-      };
-
-      setChartData(data);
-
-    }
-  }, [crimeData]);
-
-  if (!chartData) return;
+  if (!crimeData) return;
 
   return (
     <div>
@@ -80,10 +48,10 @@ const Report = ({ crimeData }: Props) => {
         <div className='flex items-center justify-between py-3'>
           <div className='flex items-center'>
             <Image src={'/assets/pdf/logo.svg'} alt="logo" width={35} height={35} className='my-2' />
-            <h2 className='text-lg ml-2'>RealAssist.AI</h2>
+            <h2 className='text-[15px] md:text-lg ml-2'>RealAssist.AI</h2>
           </div>
           <div>
-            <h4 className='font-[900] font-poppins'>123 Main Street, Dover, NH 03820-4667</h4>
+            <h4 className='text-[9px] md:text-lg font-[900] font-poppins'>123 Main Street, Dover, NH 03820-4667</h4>
           </div>
 
 
@@ -130,7 +98,22 @@ const Report = ({ crimeData }: Props) => {
             <p className='-rotate-90'>Arrests</p>
             <div className='w-full h-[150px] bg-[#fff] px-2 py-4 my-3 rounded-[13px] drop-shadow-sm'>
               <Line
-                data={chartData}
+                data={{
+                  labels: crimeData.data.map((i) => i.data_year),
+                  datasets: [
+                    {
+                      label: 'No. of Burglary',
+                      data: crimeData.data.map((i) => i.Burglary),
+                      backgroundColor: [
+                        '#1463FF',
+                      ],
+                      borderColor: [
+                        '#1463FF',
+                      ],
+                      borderWidth: 2,
+                    },
+                  ],
+                }}
                 width={'100%'}
                 options={{
                   animation: false,
@@ -167,10 +150,10 @@ const Report = ({ crimeData }: Props) => {
         <HRLine />
         <div className='flex items-center justify-between py-3'>
           <div>
-            <h2 className='text-sm ml-2 font-[900] font-poppins text-[#1463FF]'>Report Genereted on September 26, 2023</h2>
+            <h2 className='text-[9px] md:text-sm font-[800] font-poppins text-[#1463FF]'>Report Genereted on September 26, 2023</h2>
           </div>
           <div>
-            <h4 className='text-sm font-[900] font-poppins'>RealAssist Property Report | Page 1 <span className='text-[#626E99]'>of 25</span></h4>
+            <h4 className='text-[9px] md:text-sm font-[800] font-poppins'>RealAssist Property Report | Page 1 <span className='text-[#626E99]'>of 25</span></h4>
           </div>
 
 
