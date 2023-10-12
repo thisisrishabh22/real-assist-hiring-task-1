@@ -36,6 +36,8 @@ const HRLine = () => (
 type Props = {
   crimeData: ApiResponse | null;
 };
+const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const date = new Date();
 
 const Report = ({ crimeData }: Props) => {
 
@@ -150,7 +152,7 @@ const Report = ({ crimeData }: Props) => {
         <HRLine />
         <div className='flex items-center justify-between py-3'>
           <div>
-            <h2 className='text-[9px] md:text-sm font-[800] font-poppins text-[#1463FF]'>Report Genereted on September 26, 2023</h2>
+            <h2 className='text-[9px] md:text-sm font-[800] font-poppins text-[#1463FF]'>Report Genereted on {month[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</h2>
           </div>
           <div>
             <h4 className='text-[9px] md:text-sm font-[800] font-poppins'>RealAssist Property Report | Page 1 <span className='text-[#626E99]'>of 25</span></h4>
