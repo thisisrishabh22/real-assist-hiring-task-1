@@ -33,14 +33,16 @@ const HRLine = () => (
   />
 )
 
-type Props = {
+interface ReportProps{
   crimeData: ApiResponse | null;
 };
+
+// Months Array & Date
 const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const date = new Date();
 
-const Report = ({ crimeData }: Props) => {
-
+const Report: React.FC<ReportProps> = ({ crimeData }) => {
+  // Ensure that the crime data is present
   if (!crimeData) return;
 
   return (
@@ -61,6 +63,7 @@ const Report = ({ crimeData }: Props) => {
         <HRLine />
       </div>
 
+      {/* Dummy Placeholder Blocks to Make Reports more Beautiful */}
       <div className='bg-[#E8EEFB] mx-6 pt-4 rounded-[13px] my-4'>
         <h5 className='font-poppins text-md text-[#1463FF] mx-8 mb-2'>&nbsp;&nbsp;</h5>
         <div className='bg-[#F2F4F5] w-full pr-8 pb-4 pt-3 rounded-b-[13px]'>
@@ -118,6 +121,7 @@ const Report = ({ crimeData }: Props) => {
                 }}
                 width={'100%'}
                 options={{
+                  // Disable animations
                   animation: false,
                   scales: {
                     x: {
@@ -126,6 +130,7 @@ const Report = ({ crimeData }: Props) => {
                       }
                     },
                   },
+                  // Disable the legend, tooltip, and maintain aspect ratio
                   elements: {
                     point: {
                       radius: 0,
@@ -152,7 +157,7 @@ const Report = ({ crimeData }: Props) => {
         <HRLine />
         <div className='flex items-center justify-between py-3'>
           <div>
-            <h2 className='text-[9px] md:text-sm font-[800] font-poppins text-[#1463FF]'>Report Genereted on {month[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</h2>
+            <h2 className='text-[9px] md:text-sm font-[800] font-poppins text-[#1463FF]'>Report Generated on {month[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</h2>
           </div>
           <div>
             <h4 className='text-[9px] md:text-sm font-[800] font-poppins'>RealAssist Property Report | Page 1 <span className='text-[#626E99]'>of 25</span></h4>

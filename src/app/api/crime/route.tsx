@@ -1,7 +1,10 @@
 export async function GET(request: Request) {
+  // Fetch API URL from environment variables
   const apiURL = process.env.API_URL;
+  // Ensure that the API URL is present
   if (!apiURL) return new Response('API URL not found', { status: 500 });
 
+  // Fetch crime data from the API
   const data = await getData(apiURL);
 
   return Response.json( data, {
@@ -14,7 +17,7 @@ export async function GET(request: Request) {
   });
 }
 
-
+// Fetcher Function
 async function getData(apiURL: string) {
 
   const res = await fetch(apiURL)
