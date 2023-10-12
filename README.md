@@ -10,6 +10,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Heroicons
 - JsPDF
 - Html2Canvas
+- ReactChartJS2
+- Vercel
 
 ### Installation:
 
@@ -50,3 +52,5 @@ bun dev
 ![Demo Video of the Application](/docs/demo.mov)
 
 ## Deployed on Vercel
+
+You can check the interactive demo [here](real-assist-hiring-task-1.vercel.app/).
