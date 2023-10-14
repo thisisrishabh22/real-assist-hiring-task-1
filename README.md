@@ -13,6 +13,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - ReactChartJS2
 - Vercel
 
+### Features:
+
+- Fast & Secure
+- Cross Platform Compliant (Safari, Chrome, Edge, Firefox, Opera & Other Chromium Browsers as well)
+
 ### Installation:
 
 ```bash
